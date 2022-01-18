@@ -15,8 +15,9 @@ module Liveness
     # @return [Liveness::Status]
     #
     # @since 0.1.0
-    def initialize(env)
+    def initialize(env, config: Liveness.config)
       @env = env
+      @config = config
     end
 
     # The depend services status
@@ -25,7 +26,9 @@ module Liveness
     #
     # @since 0.1.0
     def metrics
-      {}
+      @metrics ||= @config.dependencies.map do |dependency|
+        Thread.new { [dependency.name, dependency.alive?] }
+      end.map(&:value).to_h
     end
 
     # The Liveness status
@@ -34,7 +37,7 @@ module Liveness
     #
     # @since 0.1.0
     def live?
-      true
+      metrics.values.reduce(true, :&)
     end
 
     # @return [Rack::Response]

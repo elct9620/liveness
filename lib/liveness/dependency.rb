@@ -26,7 +26,7 @@ module Liveness
     def alive?
       Timeout.timeout(@timeout) do
         check!
-      rescue RuntimeError
+      rescue StandardError
         false
       end
     end
