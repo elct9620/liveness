@@ -1,8 +1,6 @@
 # Liveness
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/liveness`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+The Rack middleware to provide health check endpoints.
 
 ## Installation
 
@@ -12,17 +10,35 @@ Add this line to your application's Gemfile:
 gem 'liveness'
 ```
 
-And then execute:
-
-    $ bundle install
-
-Or install it yourself as:
-
-    $ gem install liveness
-
 ## Usage
 
-TODO: Write usage instructions here
+Configuration the Liveness to add dependency.
+
+```ruby
+Liveness.config do |c|
+  c.add :postgres, timeout: 10
+end
+```
+
+## Dependency Providers
+
+| Name       | Descroption                                           |
+|------------|-------------------------------------------------------|
+| `postgres` | The PostgreSQL adapter which for `ActiveRecord::Base` |
+| `mysql`    | The MySQL adapter which for `ActiveRecord::Base`      |
+
+## Roadmap
+
+* [x] Status Endpoint
+* [ ] Metrics Endpoint (for single dependency)
+* [ ] Dependency Provider
+  * [ ] PostgreSQL
+    * [x] ActiveRecord
+    * [ ] Sequel
+  * [ ] MySQL
+    * [x] ActiveRecord
+    * [ ] Sequel
+  * Redis
 
 ## Development
 
