@@ -19,6 +19,14 @@ RSpec.describe Liveness::Dependency do
 
       it { is_expected.to be_truthy }
     end
+
+    context 'when timeout' do
+      before do
+        allow(dependency).to receive(:check!).and_raise(Timeout::Error)
+      end
+
+      it { is_expected.to be_falsy }
+    end
   end
 
   describe '#check!' do
