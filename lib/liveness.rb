@@ -38,4 +38,6 @@ module Liveness
   def container
     @container ||= Container.new
   end
+
+  require_relative 'liveness/dependencies'
 end
