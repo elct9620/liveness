@@ -20,6 +20,18 @@ Liveness.config do |c|
 end
 ```
 
+### Rails Application
+
+Mount the `Liveness::Status` to `config/routes.rb`
+
+```ruby
+Rails.application.routes.draw do
+  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+
+  mount Liveness::Status => '/health'
+end
+```
+
 ## Dependency Providers
 
 | Name       | Descroption                                           |
@@ -38,7 +50,8 @@ end
   * [ ] MySQL
     * [x] ActiveRecord
     * [ ] Sequel
-  * Redis
+  * [ ] Redis
+  * [ ] HTTP Endpoint
 
 ## Development
 
