@@ -34,6 +34,7 @@ module Liveness
       klass = @dependencies[name.to_sym]
       return if klass.nil?
 
+      options[:name] ||= name
       klass.new(**options, &block)
     end
   end

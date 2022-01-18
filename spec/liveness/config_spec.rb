@@ -14,7 +14,7 @@ RSpec.describe Liveness::Config do
 
     context 'when dependnecy defined' do
       before do
-        container.register :redis, Object
+        container.register :redis, Liveness::Dependency
       end
 
       it do

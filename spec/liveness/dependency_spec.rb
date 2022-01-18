@@ -3,6 +3,13 @@
 RSpec.describe Liveness::Dependency do
   subject(:dependency) { described_class.new }
 
+  describe '#name' do
+    let(:dependency) { described_class.new(name: 'primary_database') }
+    subject { dependency.name }
+
+    it { is_expected.to eq('primary_database') }
+  end
+
   describe '#alive?' do
     subject { dependency.alive? }
 
