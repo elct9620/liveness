@@ -27,7 +27,7 @@ module Liveness
     # @since 0.1.0
     def metrics
       @metrics ||= @config.dependencies.map do |dependency|
-        Thread.new { [dependency.name, dependency.alive?] }
+        Thread.new { [dependency.name, dependency.status] }
       end.map(&:value).to_h
     end
 

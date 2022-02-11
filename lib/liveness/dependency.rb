@@ -18,6 +18,17 @@ module Liveness
       instance_exec(self, &block) if defined?(yield)
     end
 
+    # Return status
+    #
+    # @return [Hash]
+    #
+    # @since 0.2.0
+    def status
+      {
+        status: alive? ? 'ok' : 'failed'
+      }
+    end
+
     # Check the dependency service alive
     #
     # @return [Boolean]
