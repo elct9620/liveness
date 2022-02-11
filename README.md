@@ -20,6 +20,25 @@ Liveness.config do |c|
 end
 ```
 
+### Named Dependency
+
+```ruby
+Liveness.config do |c|
+  c.add :postgres, name: :primary_db, timeout: 10
+  c.add :postgres, name: :read_replica, timeout: 10
+end
+```
+
+### Customize Connector
+
+```ruby
+Liveness.config do |c|
+  c.add :redis, timeout: 10 do
+    Redis.new(url: 'redis://example:6379/15')
+  end
+end
+```
+
 ### Rails Application
 
 Mount the `Liveness::Status` to `config/routes.rb`
@@ -34,10 +53,11 @@ end
 
 ## Dependency Providers
 
-| Name       | Descroption                                           |
+| Name       | Description                                           |
 |------------|-------------------------------------------------------|
 | `postgres` | The PostgreSQL adapter which for `ActiveRecord::Base` |
 | `mysql`    | The MySQL adapter which for `ActiveRecord::Base`      |
+| `redis`    | Test Redis via `redis-rb` gem via `#ping` method      |
 
 ## Roadmap
 
@@ -50,7 +70,7 @@ end
   * [ ] MySQL
     * [x] ActiveRecord
     * [ ] Sequel
-  * [ ] Redis
+  * [x] Redis
   * [ ] HTTP Endpoint
 
 ## Development
