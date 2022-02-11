@@ -13,7 +13,7 @@ module Liveness
       def check!
         return false unless defined?(::Redis)
 
-        redis = ::Redis.new
+        redis = connect || ::Redis.new
         redis.ping == 'PONG'
       rescue ::Redis::BaseError
         false

@@ -14,8 +14,7 @@ module Liveness
     def initialize(name: nil, timeout: 5, &block)
       @name = name
       @timeout = timeout
-
-      instance_exec(self, &block) if defined?(yield)
+      @connector = block
     end
 
     # Return status
@@ -49,6 +48,17 @@ module Liveness
     # @since 0.1.0
     def check!
       raise NotImplementedError
+    end
+
+    # Connect with connector
+    #
+    # @return [Object]
+    #
+    # @since 0.2.0
+    def connect
+      return unless @connector.respond_to?(:call)
+
+      instance_exec(self, &@connector)
     end
   end
 end
