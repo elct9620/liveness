@@ -39,6 +39,8 @@ module Liveness
       rescue StandardError
         false
       end
+    rescue Timeout::Error
+      false
     end
 
     # Check the dependency service alive
