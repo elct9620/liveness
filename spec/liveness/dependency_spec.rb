@@ -10,6 +10,24 @@ RSpec.describe Liveness::Dependency do
     it { is_expected.to eq('primary_database') }
   end
 
+  describe '#status' do
+    subject { dependency.status }
+
+    before do
+      allow(dependency).to receive(:check!).and_return(false)
+    end
+
+    it { is_expected.to include(status: 'failed') }
+
+    context 'when dependency alive' do
+      before do
+        allow(dependency).to receive(:check!).and_return(true)
+      end
+
+      it { is_expected.to include(status: 'ok') }
+    end
+  end
+
   describe '#alive?' do
     subject { dependency.alive? }
 
