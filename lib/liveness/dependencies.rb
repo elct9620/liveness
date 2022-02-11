@@ -7,5 +7,6 @@ module Liveness
   module Dependencies
     require_relative 'dependencies/postgresql'
     require_relative 'dependencies/mysql'
+    require_relative 'dependencies/redis'
   end
 end
