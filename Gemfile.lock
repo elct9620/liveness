@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    liveness (0.2.0)
+    liveness (0.2.1)
       rack (>= 1.0)
 
 GEM
