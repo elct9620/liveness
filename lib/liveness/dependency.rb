@@ -35,7 +35,7 @@ module Liveness
     # @since 0.1.0
     def alive?
       Timeout.timeout(@timeout) do
-        check!
+        connect || check!
       rescue StandardError
         false
       end

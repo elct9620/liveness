@@ -37,7 +37,10 @@ module Liveness
     #
     # @since 0.1.0
     def live?
-      metrics.values.map { |status| status == 'ok' }.reduce(true, :&)
+      metrics
+        .values
+        .map { |service| service[:status] == 'ok' }
+        .reduce(true, :&)
     end
 
     # @return [Rack::Response]

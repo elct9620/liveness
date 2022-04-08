@@ -29,7 +29,7 @@ RSpec.describe Liveness::Dependency do
   end
 
   describe '#alive?' do
-    subject { dependency.alive? }
+    subject(:check_alive) { dependency.alive? }
 
     before do
       allow(dependency).to receive(:check!).and_return(false)
@@ -51,6 +51,16 @@ RSpec.describe Liveness::Dependency do
       end
 
       it { is_expected.to be_falsy }
+    end
+
+    context 'when customize connector given' do
+      let(:dependency) { described_class.new(name: 'primary_database') { true } }
+
+      before do
+        allow(dependency).to receive(:check!).and_return(false)
+      end
+
+      it { is_expected.to be_truthy }
     end
   end
 
