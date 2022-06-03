@@ -1,4 +1,5 @@
-# Liveness
+Liveness [![Ruby](https://github.com/elct9620/liveness/actions/workflows/main.yml/badge.svg)](https://github.com/elct9620/liveness/actions/workflows/main.yml)
+===
 
 The Rack middleware to provide health check endpoints.
 
