@@ -9,7 +9,7 @@ module Liveness
     attr_reader :dependencies
 
     # @since 0.3.0
-    attr_accessor :token
+    attr_accessor :token, :ip_whitelist
 
     # @return [Liveness::Config]
     #
@@ -17,6 +17,7 @@ module Liveness
     def initialize(container: Liveness.container, &block)
       @container = container
       @dependencies = []
+      @ip_whitelist = []
 
       instance_exec(self, &block) if defined?(yield)
     end

@@ -16,7 +16,7 @@ module Liveness
     HEADERS = { 'Content-Type' => 'application/json' }.freeze
 
     # @since 0.3.0
-    FORBIDDEN_MESSAGE = { message: 'invalid token' }.freeze
+    FORBIDDEN_MESSAGE = { message: 'access denied' }.freeze
 
     # @return [Liveness::Status]
     #
@@ -50,22 +50,12 @@ module Liveness
         .reduce(true, :&)
     end
 
-    # If protected by token verify token first
-    #
-    # @return [Boolean]
-    #
-    # @since 0.3.0
-    def valid_token?
-      return true if @config.token.nil?
-
-      @config.token == @request.params['token']
-    end
-
     # @return [Rack::Response]
     #
     # @since 0.1.0
     def response
-      return forbidden unless valid_token?
+      access = Access.new(@request, config: @config)
+      return forbidden unless access.allowed?
 
       [
         live? ? 200 : 503,

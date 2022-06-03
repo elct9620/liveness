@@ -6,6 +6,7 @@ require_relative 'liveness/version'
 require_relative 'liveness/dependency'
 require_relative 'liveness/container'
 require_relative 'liveness/config'
+require_relative 'liveness/access'
 require_relative 'liveness/status'
 
 # The Rack middleware to provide health check endpoints.
