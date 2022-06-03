@@ -28,6 +28,15 @@ Liveness.config do |c|
   c.add :postgres, name: :read_replica, timeout: 10
 end
 ```
+### Protected by Token
+
+```ruby
+Liveness.config do |c|
+  c.token = 'unm@tnh8ugq-WAR-myr'
+end
+```
+
+To access the status endpoint should add `?token=unm@tnh8ugq-WAR-myr` params to access it.
 
 ### Customize Connector
 
