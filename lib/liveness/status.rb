@@ -59,7 +59,7 @@ module Liveness
 
       [
         live? ? 200 : 503,
-        HEADERS,
+        HEADERS.dup,
         [metrics.to_json]
       ]
     end
@@ -69,7 +69,7 @@ module Liveness
     # @since 0.3.0
     def forbidden
       [
-        403, HEADERS, [FORBIDDEN_MESSAGE.to_json]
+        403, HEADERS.dup, [FORBIDDEN_MESSAGE.to_json]
       ]
     end
   end
