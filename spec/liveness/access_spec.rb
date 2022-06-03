@@ -17,6 +17,12 @@ RSpec.describe Liveness::Access do
 
       it { is_expected.to be_allowed }
     end
+
+    context 'when ip is 127.0.0.1' do
+      let(:env) { Rack::MockRequest.env_for('/', 'REMOTE_ADDR' => '127.0.0.1') }
+
+      it { is_expected.to be_allowed }
+    end
   end
 
   describe '#whitelist?' do

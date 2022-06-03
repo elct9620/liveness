@@ -7,6 +7,10 @@ module Liveness
   #
   # @since 0.3.0
   class Access
+    # @since 0.3.2
+    LOCAL_IPV4 = IPAddr.new('127.0.0.1')
+    LOCAL_IPV6 = IPAddr.new('::1')
+
     # @param request [Rack::Request]
     # @param config [Liveness::Config]
     #
@@ -22,7 +26,7 @@ module Liveness
     #
     # @since 0.3.0
     def allowed?
-      whitelist? && valid_token?
+      local? || (whitelist? && valid_token?)
     end
 
     # Is token valid
@@ -36,6 +40,15 @@ module Liveness
       @config.token == @request.params['token']
     end
 
+    # Is from localhost
+    #
+    # @return [Boolean]
+    #
+    # @since 0.3.2
+    def local?
+      LOCAL_IPV4.include?(@request.ip) || LOCAL_IPV6.include?(@request.ip)
+    end
+
     # Is ip in whitelist
     #
     # @return [Boolean]
@@ -43,8 +56,6 @@ module Liveness
     # @sicne 0.3.0
     def whitelist?
       return true if @config.ip_whitelist.empty?
-      return true if IPAddr.new('127.0.0.1').include?(@request.ip)
-      return true if IPAddr.new('::1').include?(@request.ip)
 
       @config
         .ip_whitelist
