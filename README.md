@@ -28,7 +28,7 @@ Liveness.config do |c|
   c.add :postgres, name: :read_replica, timeout: 10
 end
 ```
-### Protected by Token
+### Access Protected
 
 ```ruby
 Liveness.config do |c|
@@ -37,6 +37,14 @@ end
 ```
 
 To access the status endpoint should add `?token=unm@tnh8ugq-WAR-myr` params to access it.
+
+```ruby
+Liveness.config do |c|
+  c.ip_whitelist = ['192.168.0.0/24']
+end
+```
+
+To access the status endpoint should called from `127.0.0.1` or `::1` or under `192.168.0.0/24`.
 
 ### Customize Connector
 
