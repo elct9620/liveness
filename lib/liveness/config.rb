@@ -8,6 +8,9 @@ module Liveness
     # @since 0.1.0
     attr_reader :dependencies
 
+    # @since 0.3.0
+    attr_accessor :token
+
     # @return [Liveness::Config]
     #
     # @since 0.1.0

@@ -12,11 +12,18 @@ module Liveness
       end
     end
 
+    # @since 0.3.0
+    HEADERS = { 'Content-Type' => 'application/json' }.freeze
+
+    # @since 0.3.0
+    FORBIDDEN_MESSAGE = { message: 'invalid token' }.freeze
+
     # @return [Liveness::Status]
     #
     # @since 0.1.0
     def initialize(env, config: Liveness.config)
       @env = env
+      @request = Rack::Request.new(env)
       @config = config
     end
 
@@ -43,14 +50,36 @@ module Liveness
         .reduce(true, :&)
     end
 
+    # If protected by token verify token first
+    #
+    # @return [Boolean]
+    #
+    # @since 0.3.0
+    def valid_token?
+      return true if @config.token.nil?
+
+      @config.token == @request.params['token']
+    end
+
     # @return [Rack::Response]
     #
     # @since 0.1.0
     def response
+      return forbidden unless valid_token?
+
       [
         live? ? 200 : 503,
-        { 'Content-Type' => 'application/json' },
+        HEADERS,
         [metrics.to_json]
+      ]
+    end
+
+    # @return [Rack::Response]
+    #
+    # @since 0.3.0
+    def forbidden
+      [
+        403, HEADERS, [FORBIDDEN_MESSAGE.to_json]
       ]
     end
   end
